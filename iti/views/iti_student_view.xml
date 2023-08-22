@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+     <record model="ir.ui.view" id="iti_forms_view">
+            <field name="name">form student</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+               <form>
+
+                   <header>
+                       <button
+                       string="set first interview"
+                       type="object" name="change_state"
+                       attrs="{'invisible':[('state','!=','applied')]}"
+                       />
+                       <button string="set second interview"   type="object" name="change_state" states="first"/>
+                       <button string="passed"  type="object" name="set_passed" states="second"/>
+                       <button string="Rejected" type="object" name="set_rejected" states="second"/>
+
+                       <button string="back to applied " type="object" name="change_state" states="passed,rejected"/>
+
+                   </header>
+
+
+
+
+
+
+
+
+
+
+<!--                    <header>-->
+<!--                       <button-->
+<!--                       string="set first interview"-->
+<!--                       type="object" name="change_state"-->
+<!--                       attrs="{'invisible':[('state','!=','applied')]}"-->
+<!--                       />-->
+<!--                       <button string="set second interview"  type="object" name="change_state"/>-->
+<!--                       <button string="passed" type="object" name="change_state" />-->
+<!--                       <button string="Rejected" type="object" name="change_state" />-->
+
+<!--                   </header>   -->
+
+
+
+
+
+
+                   <sheet>
+                                      <group>
+                 <field name="state"/>
+
+                   <group string = "basic info">
+                   <field name="name"/>
+                       <field name="email"/>
+
+                           <field name="gender"/>
+                   <field name="birth_date" attrs="{'invisible':[('gender','=','f')]}"/>
+                   <field name="salary" />
+                                          <field name="tax" />
+
+                        </group>
+
+                   <group string = "address info">
+                   <field name="address"/>
+                   <field name="image" widget="image"/>
+
+
+
+
+
+
+<!--                       <field name="track_id"/>-->
+                       <field name="track_id" domain="[('is_open','=',True)]"/>
+
+                       <field name="track_capasity"/>
+
+
+                       <field name="skill_id" widget="many2many_tags"/>
+
+                        </group>
+
+
+<notebook>
+   <page string="cv">   <group> <field name="cv"/> </group>  </page>
+       <page string="level">    <field name="level"/>   </page>
+       <page string="interview_time">    <field name="interview_time"/>   </page>
+
+
+
+           <page string="grades">    <field name="grade_ids"/>   </page>
+
+</notebook>
+
+ </group>
+</sheet>
+               </form>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <record model="ir.ui.view" id="iti_tree_view">
+            <field name="name">tree student</field>
+            <field name="model">iti.student</field>
+            <field name="arch" type="xml">
+               <tree>
+                   <field name="name"/>
+                   <field name="birth_date"/>
+                   <field name="salary"/>
+               </tree>
+            </field>
+        </record>
+
+
+<record id="action_students" model="ir.actions.act_window">
+<field name="name">students</field>
+<field name="res_model">iti.student</field>
+<!--<field name="view_mode">tree,form</field>-->
+<!--<field name="context">{}</field>-->
+<!--<field name="help" type="html">-->
+<!--<p class="o_view_nocontent_smiling_face"> Create your first patient! </p>-->
+<!--</field>-->
+</record>
+
+<menuitem id="iti_root" name="iti" />
+<menuitem id="iti_student_menu" name="student" parent="iti_root" action="action_students"  />
+
+</odoo>
